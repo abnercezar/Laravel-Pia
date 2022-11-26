@@ -1,18 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace {{ namespace }};
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Comum extends Model
+class {{ class }} extends Model
 {
     use HasFactory, SoftDeletes;
-
-    protected $table = 'comuns';
-
-    protected $fillable = [
-        'name',
-    ];
 }

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateComumRequest extends FormRequest
+class ComumShowRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class UpdateComumRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:3|max:191',
+            //
         ];
     }
 }

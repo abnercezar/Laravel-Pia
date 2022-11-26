@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateComumRequest;
-use App\Http\Requests\DestroyComumRequest;
-use App\Http\Requests\EditComumRequest;
-use App\Http\Requests\IndexComumRequest;
-use App\Http\Requests\ShowComumRequest;
-use App\Http\Requests\StoreComumRequest;
-use App\Http\Requests\UpdateComumRequest;
+use App\Http\Requests\ComumCreateRequest;
+use App\Http\Requests\ComumDestroyRequest;
+use App\Http\Requests\ComumEditRequest;
+use App\Http\Requests\ComumIndexRequest;
+use App\Http\Requests\ComumShowRequest;
+use App\Http\Requests\ComumStoreRequest;
+use App\Http\Requests\ComumUpdateRequest;
 use App\Http\Resources\ComumResource;
 use App\Models\Comum;
 use Illuminate\Http\RedirectResponse;
@@ -19,10 +19,10 @@ class ComumController extends Controller
     /**
      * Lista as comuns
      * 
-     * @param  IndexComumRequest $request
+     * @param  ComumIndexRequest $request
      * @return InertiaResponse
      */
-    public function index(IndexComumRequest $request): InertiaResponse
+    public function index(ComumIndexRequest $request): InertiaResponse
     {
         $comuns = ComumResource::collection(Comum::orderBy('name')->get());
         return inertia('Comum', compact('comuns'));
@@ -31,11 +31,11 @@ class ComumController extends Controller
     /**
      * Mostra os dados da comum
      * 
-     * @param  ShowComumRequest $request
+     * @param  ComumShowRequest $request
      * @param  Comum            $comum  
      * @return InertiaResponse          
      */
-    public function show(ShowComumRequest $request, Comum $comum): InertiaResponse
+    public function show(ComumShowRequest $request, Comum $comum): InertiaResponse
     {
         return inertia('ComumNewEdit', compact('comum'));
     }
@@ -43,10 +43,10 @@ class ComumController extends Controller
     /**
      * Vai para tela de criação da comum
      * 
-     * @param  CreateComumRequest $request 
+     * @param  ComumCreateRequest $request 
      * @return InertiaResponse                      
      */
-    public function create(CreateComumRequest $request): InertiaResponse
+    public function create(ComumCreateRequest $request): InertiaResponse
     {
         return inertia('ComumNewEdit');
     }
@@ -54,10 +54,10 @@ class ComumController extends Controller
     /**
      * Registra a comum efetivamento no banco de dados
      * 
-     * @param  StoreComumRequest $request 
+     * @param  ComumStoreRequest $request 
      * @return RedirectResponse                     
      */
-    public function store(StoreComumRequest $request): RedirectResponse
+    public function store(ComumStoreRequest $request): RedirectResponse
     {
         $comum = Comum::create($request->validated());
         return redirect(route('comums.index'))->with(['message' => $comum->name . ' criado com sucesso']);
@@ -66,11 +66,11 @@ class ComumController extends Controller
     /**
      * Vai para tela de edição da comum
      *     
-     * @param  EditComumRequest $request
+     * @param  ComumEditRequest $request
      * @param  Comum            $comum  
      * @return InertiaResponse                  
      */
-    public function edit(EditComumRequest $request, Comum $comum): InertiaResponse
+    public function edit(ComumEditRequest $request, Comum $comum): InertiaResponse
     {
         return inertia('ComumNewEdit', compact('comum'));
     }
@@ -78,11 +78,11 @@ class ComumController extends Controller
     /**
      * Atualiza o registro da comum efetivamente no banco de dados
      * 
-     * @param  UpdateComumRequest $request 
+     * @param  ComumUpdateRequest $request 
      * @param  Comum              $comum   
      * @return RedirectResponse                      
      */
-    public function update(UpdateComumRequest $request, Comum $comum): RedirectResponse
+    public function update(ComumUpdateRequest $request, Comum $comum): RedirectResponse
     {
         $comum->update($request->validated());
         return redirect(route('comums.index'))->with(['message' => $comum->name . ' atualizado com sucesso']);
@@ -91,11 +91,11 @@ class ComumController extends Controller
     /**
      * Deleta a comum efetivamente do banco de dados
      * 
-     * @param  DestroyComumRequest $request
+     * @param  ComumDestroyRequest $request
      * @param  Comum               $comum  
      * @return RedirectResponse                      
      */
-    public function destroy(DestroyComumRequest $request, Comum $comum): RedirectResponse
+    public function destroy(ComumDestroyRequest $request, Comum $comum): RedirectResponse
     {
         $comum->forceDelete();
         return back()->with(['message' => $comum->name . ' deletado com sucesso']);
