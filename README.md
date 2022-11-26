@@ -5,6 +5,7 @@ Projetinho para igreja
 ## Requerimentos
 
 Docker
+
 WSL2 (Apenas para windows)
 
 ## Passo a Passo
