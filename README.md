@@ -62,7 +62,7 @@ sail npm run build:all
 
 Suba o serviço do node
 ```
-node bootstrap/ssr/ssr.mjs
+sail node bootstrap/ssr/ssr.mjs
 ```
 
 Acesse o projeto
