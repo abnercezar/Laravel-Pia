@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Comum extends Model
 {
@@ -15,4 +16,9 @@ class Comum extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function irmas(): BelongsToMany
+    {
+        return $this->belongsToMany(Irma::class, 'comum_irma');
+    }
 }
