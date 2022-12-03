@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreIrmaRequest;
 use App\Http\Requests\UpdateIrmaRequest;
+use App\Http\Resources\ComumDropdownResource;
+use App\Http\Resources\IrmaResource;
+use App\Models\Comum;
 use App\Models\Irma;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class IrmaController extends Controller
 {
@@ -15,7 +19,11 @@ class IrmaController extends Controller
      */
     public function index()
     {
-        //
+        $irmas = IrmaResource::collection(
+            Irma::with(['contatos', 'comuns'])->orderBy('name')->get()
+        );
+
+        return inertia('Irma', compact('irmas'));
     }
 
     /**
@@ -25,7 +33,8 @@ class IrmaController extends Controller
      */
     public function create()
     {
-        //
+        $comuns = $this->dropdownComuns();
+        return inertia('IrmaNewEdit', compact('comuns'));
     }
 
     /**
@@ -36,7 +45,14 @@ class IrmaController extends Controller
      */
     public function store(StoreIrmaRequest $request)
     {
-        //
+        $irma = \DB::transaction(function () use ($request) {
+            $irma = Irma::create($request->safe()->only(['name', 'cpf']));
+            $irma->comuns()->attach($request->safe()->comuns);
+            $irma->contatos()->createMany($request->safe()->contatos);
+            return $irma;
+        });
+
+        return redirect()->route('irmas.index')->with('message', "Irmã {$irma->name} criado(a) com sucesso.");
     }
 
     /**
@@ -47,7 +63,12 @@ class IrmaController extends Controller
      */
     public function show(Irma $irma)
     {
-        //
+        $irma->load(['contatos', 'comuns']);
+        $irma = IrmaResource::make($irma);
+
+        $comuns = $this->dropdownComuns();
+
+        return inertia('IrmaNewEdit', compact('irma', 'comuns'));
     }
 
     /**
@@ -58,7 +79,12 @@ class IrmaController extends Controller
      */
     public function edit(Irma $irma)
     {
-        //
+        $irma->load(['contatos', 'comuns']);
+        $irma = IrmaResource::make($irma);
+
+        $comuns = $this->dropdownComuns();
+
+        return inertia('IrmaNewEdit', compact('irma', 'comuns'));
     }
 
     /**
@@ -70,7 +96,14 @@ class IrmaController extends Controller
      */
     public function update(UpdateIrmaRequest $request, Irma $irma)
     {
-        //
+        \DB::transaction(function () use ($request, $irma) {
+            $irma->update($request->safe()->only(['name', 'cpf']));
+            $irma->comuns()->sync($request->safe()->comuns);
+            $irma->contatos()->forceDelete();
+            $irma->contatos()->createMany($request->safe()->contatos);
+        });
+
+        return redirect()->route('irmas.index')->with('message', "Irmã {$irma->name} atualizado(a) com sucesso.");
     }
 
     /**
@@ -81,6 +114,23 @@ class IrmaController extends Controller
      */
     public function destroy(Irma $irma)
     {
-        //
+        try {
+            if ($irmas->atendimentos()->withTrashed()->exists())
+                throw new TemAtendimentoException("A Irmã não pode ser deletada pois possui atendimentos.", 1);
+
+            \DB::transaction(function () use ($irma) {
+                $irma->contatos()->delete();
+                $irma->delete();
+            });
+
+            return redirect()->route('irmas.index')->with('message', "Irmã {$irma->name} deletado(a) com sucesso.");
+        } catch (TemAtendimentoException $exception) {
+            return back()->withErrors(['errors' => $exception->getMessage()]);
+        }
+    }
+
+    private function dropdownComuns(): ResourceCollection
+    {
+        return ComumDropdownResource::collection(Comum::orderBy('name')->get());
     }
 }

@@ -24,11 +24,12 @@ class UpdateIrmaRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:2|max:200',
+            'name' => 'required|min:2|max:191',
             'cpf' => 'required|size:14',
             'comuns' => 'required|array',
             'comuns.*' => 'exists:comuns,id',
-            'contatos' => 'required|array',
+            'contatos' => 'required|array:description',
+            'contatos.*.description' => 'required|min:2|max:191',
         ];
     }
 }

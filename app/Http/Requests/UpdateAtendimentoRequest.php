@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\AtendimentoType;
+use Illuminate\Validation\Rules\Enum;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreIrmaRequest extends FormRequest
+class UpdateAtendimentoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +26,9 @@ class StoreIrmaRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:2|max:191',
-            'cpf' => 'required|size:14',
-            'comuns' => 'required|array',
-            'comuns.*' => 'exists:comuns,id',
-            'contatos' => 'required|array:description',
-            'contatos.*.description' => 'required|min:2|max:191',
+            'tipo' => ['required', new Enum(AtendimentoType::class)],
+            'valor' => 'required|float|min:1',
+            'irma_id' => 'required|exists:irmas,id'
         ];
     }
 }

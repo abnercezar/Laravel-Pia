@@ -21,4 +21,14 @@ class Irma extends Model
     {
         return $this->belongsToMany(Comum::class, 'comum_irma');
     }
+
+    public function atendimentos(): HasMany
+    {
+        return $this->hasMany(Atendimento::class);
+    }
+
+    public function contatos(): HasMany
+    {
+        return $this->hasMany(Contato::class);
+    }
 }

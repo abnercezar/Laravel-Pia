@@ -17,8 +17,8 @@ class IrmaFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->name(),
-            'cpf' => fake()->numberBetween(100, 999).'.'.fake()->numberBetween(100, 999).'.'.fake()->numberBetween(100, 999).'-'.fake()->numberBetween(10, 99),
+            'name' => $this->faker->name(),
+            'cpf' => $this->faker->cpf(),
         ];
     }
 }
