@@ -18,7 +18,7 @@ class ContatoFactory extends Factory
     public function definition()
     {
         return [
-            'description' => $this->faker->cellphoneNumber(),
+            'descricao' => $this->faker->cellphoneNumber(),
             'irma_id' => $this->irma()->id,
         ];
     }

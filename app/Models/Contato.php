@@ -12,7 +12,7 @@ class Contato extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'description',
+        'descricao',
         'irma_id',
     ];
 

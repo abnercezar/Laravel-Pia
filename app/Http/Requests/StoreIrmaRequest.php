@@ -25,11 +25,11 @@ class StoreIrmaRequest extends FormRequest
     {
         return [
             'name' => 'required|min:2|max:191',
-            'cpf' => 'required|size:14',
+            'cpf' => 'required|max:14',
             'comuns' => 'required|array',
             'comuns.*' => 'exists:comuns,id',
-            'contatos' => 'required|array:description',
-            'contatos.*.description' => 'required|min:2|max:191',
+            'contatos' => 'required|array',
+            'contatos.*.descricao' => 'required|min:2|max:191',
         ];
     }
 }

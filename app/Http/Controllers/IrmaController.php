@@ -115,7 +115,7 @@ class IrmaController extends Controller
     public function destroy(Irma $irma)
     {
         try {
-            if ($irmas->atendimentos()->withTrashed()->exists())
+            if ($irma->atendimentos()->withTrashed()->exists())
                 throw new TemAtendimentoException("A Irmã não pode ser deletada pois possui atendimentos.", 1);
 
             \DB::transaction(function () use ($irma) {

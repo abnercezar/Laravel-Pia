@@ -68,7 +68,10 @@ function showEditForm(id)
                     <div class="grid grid-cols-12 rounded-lg shadow-sm border p-2 mb-2"
                         v-for="irma in irmas.data" :key="irma.id">
                         <span class="col-span-10">
-                            {{ irma.name }}
+                            <b>Nome</b>: {{ irma.name }} &nbsp;&nbsp;&nbsp;
+                            <b>Cpf</b>: {{ irma.cpf }} &nbsp;&nbsp;&nbsp;
+                            <b>Contatos</b>: {{ _.map(irma.contatos, 'descricao').join(',') }} &nbsp;&nbsp;&nbsp;
+                            <b>Comuns</b>: {{ _.map(irma.comuns, 'name').join(',') }} &nbsp;&nbsp;&nbsp;
                         </span>
                         <span class="cursor-pointer text-blue-400" @click="showEditForm(irma)">Edit</span>
                         <span class="cursor-pointer text-red-400" @click="showDeleteModal(irma)">Delete</span>
