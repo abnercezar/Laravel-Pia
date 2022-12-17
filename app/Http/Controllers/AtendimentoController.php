@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AtendimentoType;
 use App\Http\Requests\StoreAtendimentoRequest;
 use App\Http\Requests\UpdateAtendimentoRequest;
 use App\Http\Resources\AtendimentoResource;
+use App\Http\Resources\DropdownResource;
 use App\Models\Atendimento;
+use App\Models\Irma;
 
 class AtendimentoController extends Controller
 {
@@ -27,7 +30,10 @@ class AtendimentoController extends Controller
      */
     public function create()
     {
-        return inertia('AtendimentoNewEdit');
+        $irmas = DropdownResource::collection(Irma::all());
+        $atendimentoTipos = AtendimentoType::all();
+        
+        return inertia('AtendimentoNewEdit', compact('irmas', 'atendimentoTipos'));
     }
 
     /**

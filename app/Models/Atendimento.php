@@ -12,6 +12,8 @@ class Atendimento extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $with = ['irma'];
+
     protected $fillable = [
         'irma_id',
         'tipo',

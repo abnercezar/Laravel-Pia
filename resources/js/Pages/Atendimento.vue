@@ -10,7 +10,7 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 defineProps({
-    atendimentos: Object
+    atendimentos: Object,
 });
 
 const deleteForm = useForm({});
@@ -67,8 +67,14 @@ function showEditForm(id)
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="grid grid-cols-12 rounded-lg shadow-sm border p-2 mb-2"
                         v-for="atendimento in atendimentos.data" :key="atendimento.id">
-                        <span class="col-span-10">
-                            {{ atendimento.name }}
+                        <span class="col-span-6">
+                            <b>Irmã</b>: {{ atendimento.irma.name }}
+                        </span>
+                        <span class="col-span-2">
+                            <b>Tipo</b>: {{ atendimento.tipo === 'C' ? 'Cartão de Crédito' : 'Espécie' }}
+                        </span>
+                        <span class="col-span-2">
+                            <b>Valor</b>: {{ atendimento.valor }}
                         </span>
                         <span class="cursor-pointer text-blue-400" @click="showEditForm(atendimento)">Edit</span>
                         <span class="cursor-pointer text-red-400" @click="showDeleteModal(atendimento)">Delete</span>

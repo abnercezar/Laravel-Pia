@@ -14,6 +14,10 @@ class AtendimentoResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'irma' => IrmaResource::make($this->whenLoaded('irma')),
+            'tipo' => $this->tipo,
+            'valor' => $this->valor,
+        ];
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreIrmaRequest;
 use App\Http\Requests\UpdateIrmaRequest;
-use App\Http\Resources\ComumDropdownResource;
+use App\Http\Resources\DropdownResource;
 use App\Http\Resources\IrmaResource;
 use App\Models\Comum;
 use App\Models\Irma;
@@ -131,6 +131,6 @@ class IrmaController extends Controller
 
     private function dropdownComuns(): ResourceCollection
     {
-        return ComumDropdownResource::collection(Comum::orderBy('name')->get());
+        return DropdownResource::collection(Comum::orderBy('name')->get());
     }
 }

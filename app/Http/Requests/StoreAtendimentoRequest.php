@@ -27,7 +27,7 @@ class StoreAtendimentoRequest extends FormRequest
     {
         return [
             'tipo' => ['required', new Enum(AtendimentoType::class)],
-            'valor' => 'required|float|min:1',
+            'valor' => 'required|numeric|min:1',
             'irma_id' => 'required|exists:irmas,id'
         ];
     }
