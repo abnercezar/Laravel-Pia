@@ -1,6 +1,4 @@
-# Projeto do Bie
-
-Projetinho para igreja
+# Projeto para controle de caixa
 
 ## Requerimentos
 
