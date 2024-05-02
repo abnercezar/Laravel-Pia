@@ -1,6 +1,6 @@
-# Projeto do Bie
+# CCB
 
-Projetinho para igreja
+Controle de caixa
 
 ## Requerimentos
 
